@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/condition-event.json",
+  "title": "ArtCube Protocol Condition Event",
+  "description": "Records physical condition of artwork. Child of Genesis (parent/child).",
+  "type": "object",
+  "required": [
+    "protocol", "event_type", "version", "parent_genesis_inscription",
+    "effective_date", "previous_event_pointer", "created_utc",
+    "inspection_date", "inspector_entity", "condition_summary"
+  ],
+  "properties": {
+    "protocol": { "const": "ACP" },
+    "event_type": { "const": "CONDITION_EVENT" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "parent_genesis_inscription": { "type": "string" },
+    "effective_date": { "type": "string", "format": "date" },
+    "previous_event_pointer": { "type": ["string", "null"] },
+    "created_utc": { "type": "string", "format": "date-time" },
+    "inspection_date": { "type": "string", "format": "date" },
+    "inspector_entity": { "type": "string" },
+    "condition_summary": { "type": "string" },
+    "damage_or_repairs": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "media_hashes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

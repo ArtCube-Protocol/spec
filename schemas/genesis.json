@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/genesis.json",
+  "title": "ArtCube Protocol Genesis Title Anchor",
+  "description": "Level 2 inscription establishing the immutable root of trust for an individual artwork. Child of Collection Parent (parent/child).",
+  "type": "object",
+  "required": [
+    "protocol", "standard", "inscription_type", "version",
+    "record", "object_id_core", "ownership_at_genesis",
+    "legal_title_anchor", "intellectual_property", "update_policy", "bridge_integrity"
+  ],
+  "properties": {
+    "protocol": { "const": "ACP" },
+    "standard": { "const": "ObjectID + Title Anchor + IP Baseline" },
+    "inscription_type": { "const": "GENESIS_TITLE_ANCHOR" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "record": {
+      "type": "object",
+      "required": ["asset_id", "object_id_record_date", "created_utc", "language"],
+      "properties": {
+        "asset_id": { "type": "string" },
+        "object_id_record_date": { "type": "string", "format": "date" },
+        "created_utc": { "type": "string", "format": "date-time" },
+        "language": { "type": "string" },
+        "spv_reference_id": { "type": "string" }
+      }
+    },
+    "object_id_core": {
+      "type": "object",
+      "required": [
+        "type_of_object", "title", "subject", "date_or_period",
+        "maker", "materials_and_techniques", "measurements",
+        "inscriptions_and_markings", "distinguishing_features"
+      ],
+      "properties": {
+        "type_of_object": { "type": "string" },
+        "title": { "type": "string" },
+        "subject": { "type": "string" },
+        "date_or_period": { "type": "object" },
+        "maker": { "type": "object" },
+        "materials_and_techniques": {
+          "type": "object",
+          "required": ["materials", "techniques"],
+          "properties": {
+            "materials": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "confirmed"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "confirmed": { "type": "boolean" }
+                }
+              }
+            },
+            "techniques": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "confirmed"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "confirmed": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "measurements": { "type": "object" },
+        "inscriptions_and_markings": { "type": "object" },
+        "distinguishing_features": { "type": "object" }
+      }
+    },
+    "provenance_summary": { "type": "object" },
+    "ownership_at_genesis": {
+      "type": "object",
+      "required": ["legal_owner_entity", "physical_custodian"],
+      "properties": {
+        "legal_owner_entity": {
+          "type": "object",
+          "required": ["name", "jurisdiction"],
+          "properties": {
+            "name": { "type": "string" },
+            "jurisdiction": { "type": "string" }
+          }
+        },
+        "physical_custodian": {
+          "type": "object",
+          "required": ["name", "location"],
+          "properties": {
+            "name": { "type": "string" },
+            "location": { "type": "string" }
+          }
+        }
+      }
+    },
+    "legal_title_anchor": {
+      "type": "object",
+      "required": ["title_anchor", "governing_law", "hybrid_transfer_rule", "canonical_title_determination", "statement"],
+      "properties": {
+        "title_anchor": { "const": true },
+        "governing_law": { "type": "string" },
+        "hybrid_transfer_rule": { "type": "string" },
+        "canonical_title_determination": { "type": "string" },
+        "technical_vs_legal_notice": { "type": "string" },
+        "statement": { "type": "string" }
+      }
+    },
+    "intellectual_property": {
+      "type": "object",
+      "required": ["ip_version", "copyright", "moral_rights", "rights_grants"],
+      "properties": {
+        "ip_version": { "type": "string" },
+        "copyright": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["OWNED", "LICENSED", "PUBLIC_DOMAIN", "UNKNOWN", "DISPUTED"]
+            },
+            "copyright_owner": { "type": "object" },
+            "copyright_year": { "type": ["integer", "null"] },
+            "registration": { "type": "object" }
+          }
+        },
+        "moral_rights": {
+          "type": "object",
+          "properties": {
+            "waived": { "type": "string", "enum": ["YES", "NO", "UNKNOWN"] },
+            "attribution_required": { "type": "string", "enum": ["YES", "NO", "UNKNOWN"] },
+            "integrity_rights_notes": { "type": ["string", "null"] }
+          }
+        },
+        "rights_grants": {
+          "type": "object",
+          "required": ["baseline_policy", "granted_to_holder", "not_granted_by_default"],
+          "properties": {
+            "baseline_policy": { "const": "BASELINE_DISPLAY_RIGHTS" },
+            "granted_to_holder": {
+              "type": "object",
+              "required": ["holder_scope", "rights", "status", "limitations"],
+              "properties": {
+                "holder_scope": { "const": "ALIGNED_HOLDER" },
+                "rights": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "status": { "const": "GRANTED" },
+                "limitations": { "type": "object" }
+              }
+            },
+            "not_granted_by_default": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "digital_asset_rights": { "type": "object" },
+        "royalties": { "type": "object" },
+        "disclosures": { "type": "object" }
+      }
+    },
+    "update_policy": {
+      "type": "object",
+      "required": ["append_only", "allowed_event_types", "correction_rule"],
+      "properties": {
+        "append_only": { "const": true },
+        "allowed_event_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "TITLE_EVENT", "DOCUMENT_EVENT", "CONDITION_EVENT", "CUSTODY_EVENT",
+              "IP_EVENT", "METADATA_UPDATE", "CORRECTION_EVENT", "SUPERSESSION_EVENT"
+            ]
+          }
+        },
+        "correction_rule": { "type": "string" }
+      }
+    },
+    "bridge_integrity": {
+      "type": "object",
+      "required": ["bridge_rule", "bitcoin_canonical"],
+      "properties": {
+        "bridge_rule": { "type": "string" },
+        "bitcoin_canonical": { "const": true }
+      }
+    }
+  },
+  "additionalProperties": false
+}

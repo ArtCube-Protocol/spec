@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/correction-event.json",
+  "title": "ArtCube Protocol Correction Event",
+  "description": "Fixes minor errors in previous events. The original event remains on-chain. Child of Genesis (parent/child).",
+  "type": "object",
+  "required": [
+    "protocol", "event_type", "version", "parent_genesis_inscription",
+    "effective_date", "previous_event_pointer", "created_utc",
+    "corrected_event_pointer", "corrected_fields", "reason"
+  ],
+  "properties": {
+    "protocol": { "const": "ACP" },
+    "event_type": { "const": "CORRECTION_EVENT" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "parent_genesis_inscription": { "type": "string" },
+    "effective_date": { "type": "string", "format": "date" },
+    "previous_event_pointer": { "type": ["string", "null"] },
+    "created_utc": { "type": "string", "format": "date-time" },
+    "corrected_event_pointer": { "type": "string" },
+    "corrected_fields": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "reason": { "type": "string" }
+  },
+  "additionalProperties": false
+}

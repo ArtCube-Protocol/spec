@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/entity-root.json",
+  "title": "ArtCube Protocol Entity Root",
+  "description": "Level 0 inscription establishing an organization's identity on Bitcoin.",
+  "type": "object",
+  "required": ["protocol", "inscription_type", "version", "entity", "governance", "burn_rule", "created_utc"],
+  "properties": {
+    "protocol": {
+      "const": "ACP"
+    },
+    "inscription_type": {
+      "const": "ENTITY_ROOT"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "entity": {
+      "type": "object",
+      "required": ["name", "type", "jurisdiction"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["ORGANIZATION", "INDIVIDUAL", "ESTATE", "TRUST", "SPV", "DAO"]
+        },
+        "jurisdiction": { "type": "string" },
+        "description": { "type": "string" },
+        "website": { "type": "string", "format": "uri" },
+        "contact": { "type": "string" }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "required": ["utxo_custody"],
+      "properties": {
+        "utxo_custody": {
+          "type": "string",
+          "enum": ["MULTISIG", "SINGLE_SIG"]
+        },
+        "authorized_signers": { "type": "integer", "minimum": 1 },
+        "required_signers": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "burn_rule": { "type": "string" },
+    "created_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

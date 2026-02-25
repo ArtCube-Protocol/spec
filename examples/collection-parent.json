@@ -1,0 +1,21 @@
+{
+  "protocol": "ACP",
+  "inscription_type": "COLLECTION_PARENT",
+  "version": "1.0",
+  "collection": {
+    "name": "Battle of the Centaurs — Precious Metal Editions",
+    "type": "EDITION_SERIES",
+    "description": "Posthumous original castings from Michelangelo's Battle of the Centaurs marble relief (c.1490-1492), executed in precious metals by Treasure Investments Corp. Each edition is a unique single casting in a different precious metal.",
+    "artist": {
+      "name": "Michelangelo Buonarroti",
+      "role": "Original composition"
+    },
+    "medium": "Precious metal castings (silver, gold, platinum)",
+    "edition_info": {
+      "total_editions": 3,
+      "edition_notes": "One edition each in .999 fine silver, .999 fine gold, and .999 fine platinum"
+    }
+  },
+  "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid.",
+  "created_utc": "2026-02-17T00:00:00Z"
+}

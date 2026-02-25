@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/custody-event.json",
+  "title": "ArtCube Protocol Custody Event",
+  "description": "Records physical location changes. Custody does not imply title transfer. Child of Genesis (parent/child).",
+  "type": "object",
+  "required": [
+    "protocol", "event_type", "version", "parent_genesis_inscription",
+    "effective_date", "previous_event_pointer", "created_utc",
+    "custodian", "location"
+  ],
+  "properties": {
+    "protocol": { "const": "ACP" },
+    "event_type": { "const": "CUSTODY_EVENT" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "parent_genesis_inscription": { "type": "string" },
+    "effective_date": { "type": "string", "format": "date" },
+    "previous_event_pointer": { "type": ["string", "null"] },
+    "created_utc": { "type": "string", "format": "date-time" },
+    "custodian": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" }
+      }
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "facility": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "country": { "type": "string" }
+      }
+    },
+    "authorization_reference": { "type": "string" }
+  },
+  "additionalProperties": false
+}

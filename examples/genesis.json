@@ -1,0 +1,136 @@
+{
+  "protocol": "ACP",
+  "standard": "ObjectID + Title Anchor + IP Baseline",
+  "inscription_type": "GENESIS_TITLE_ANCHOR",
+  "version": "1.0",
+  "record": {
+    "asset_id": "TIC-SBC-SLV-2022-001",
+    "spv_reference_id": "SBCI-ART-0001",
+    "object_id_record_date": "2026-02-17",
+    "created_utc": "2026-02-17T00:00:00Z",
+    "language": "en-US"
+  },
+  "object_id_core": {
+    "type_of_object": "Sculpture — High Relief Plaque (Posthumous Original Casting), One-of-One Silver Edition",
+    "title": "Battle of the Centaurs",
+    "subject": "Mythological battle scene (Lapiths vs. Centaurs) depicted in dense multi-figure combat relief.",
+    "date_or_period": {
+      "original_work": "c.1490–1492",
+      "silver_casting": "2022"
+    },
+    "maker": {
+      "original_artist": {
+        "name": "Michelangelo Buonarroti",
+        "role": "Original composition"
+      },
+      "wax_lineage_association": {
+        "name": "Fonderia Artistica Ferdinando Marinelli",
+        "location": "Florence, Italy",
+        "role": "Wax stage / historic master mold lineage association"
+      },
+      "metal_casting_executor": {
+        "name": "Treasure Investments Corp. (d/b/a Foundry Michelangelo)",
+        "location": "Battle Ground, Washington, USA",
+        "role": "Final .999 silver casting / metal pour",
+        "year": 2022
+      }
+    },
+    "materials_and_techniques": {
+      "materials": [
+        { "name": ".999 Fine Silver", "confirmed": true }
+      ],
+      "techniques": [
+        { "name": "Lost-wax casting (cire perdue)", "confirmed": true }
+      ]
+    },
+    "measurements": {
+      "dimensions_inches": { "height": 31.5, "width": 35.0, "depth": 4.5 },
+      "dimensions_cm": { "height": 80.0, "width": 88.9, "depth": 11.4 },
+      "weight": { "troy_ounces": 2333, "kilograms": 72.57 }
+    },
+    "inscriptions_and_markings": {
+      "confirmed": false,
+      "items": [],
+      "notes": "No metal-stage inscriptions or markings asserted without physical verification."
+    },
+    "distinguishing_features": {
+      "confirmed": false,
+      "features": [],
+      "notes": "Distinctive casting micro-variations and surface identifiers to be appended upon inspection."
+    }
+  },
+  "provenance_summary": {
+    "historical_origin": "Original marble relief sculpted c.1490–1492 by Michelangelo Buonarroti.",
+    "wax_lineage_association": "Historic master mold lineage associated with Fonderia Artistica Ferdinando Marinelli.",
+    "final_casting": "Final .999 fine silver casting executed in 2022 in Battle Ground, Washington, USA."
+  },
+  "ownership_at_genesis": {
+    "legal_owner_entity": {
+      "name": "Silver Battle of the Centaurs, Inc.",
+      "jurisdiction": "Florida, USA"
+    },
+    "physical_custodian": {
+      "name": "Treasure Investments Corp.",
+      "location": "Battle Ground, Washington, USA"
+    }
+  },
+  "legal_title_anchor": {
+    "title_anchor": true,
+    "governing_law": "Florida, USA",
+    "hybrid_transfer_rule": "Canonical title recognition requires both (i) transfer of the Genesis inscription UTXO to the new lawful authority and (ii) an appended Title Event recording the transfer.",
+    "canonical_title_determination": "Current title state is derived from alignment between Genesis UTXO control and the most recent valid Title Event referencing this Genesis.",
+    "technical_vs_legal_notice": "Bitcoin enforces technical control through UTXO ownership. Legal ownership remains governed by applicable law and contractual agreement.",
+    "statement": "This Genesis inscription serves as the canonical Bitcoin provenance and legal title anchor for the physical artwork identified herein."
+  },
+  "intellectual_property": {
+    "ip_version": "1.0",
+    "copyright": {
+      "status": "UNKNOWN",
+      "copyright_owner": { "name": null, "type": "UNKNOWN", "jurisdiction": null },
+      "copyright_year": null,
+      "registration": { "registered": "UNKNOWN", "registration_id": null, "jurisdiction": null }
+    },
+    "moral_rights": {
+      "waived": "UNKNOWN",
+      "attribution_required": "YES",
+      "integrity_rights_notes": null
+    },
+    "rights_grants": {
+      "baseline_policy": "BASELINE_DISPLAY_RIGHTS",
+      "granted_to_holder": {
+        "holder_scope": "ALIGNED_HOLDER",
+        "rights": ["DISPLAY_NONCOMMERCIAL", "EXHIBIT", "PUBLISH_IMAGES_LOWRES"],
+        "status": "GRANTED",
+        "limitations": {
+          "territory": "WORLDWIDE",
+          "term": "PERPETUAL",
+          "exclusivity": "NON_EXCLUSIVE",
+          "revocable": "NO",
+          "notes": "Baseline display rights only. All commercial, derivative, reproduction, AI, sublicensing, or merchandising rights require explicit IP Event grants."
+        }
+      },
+      "not_granted_by_default": [
+        "PUBLISH_IMAGES_HIGHRES",
+        "REPRODUCE_PRINTS",
+        "MERCHANDISING",
+        "COMMERCIALIZE",
+        "CREATE_DERIVATIVES",
+        "AI_TRAINING_ALLOWED",
+        "AI_GENERATION_ALLOWED",
+        "SUBLICENSE"
+      ]
+    }
+  },
+  "update_policy": {
+    "append_only": true,
+    "allowed_event_types": [
+      "TITLE_EVENT", "DOCUMENT_EVENT", "CONDITION_EVENT", "CUSTODY_EVENT",
+      "IP_EVENT", "METADATA_UPDATE", "CORRECTION_EVENT", "SUPERSESSION_EVENT"
+    ],
+    "correction_rule": "Genesis may not be edited. Minor errors require Correction Events. Material identity errors require new Genesis plus Supersession Event."
+  },
+  "bridge_integrity": {
+    "bridge_rule": "External blockchain integrations must verify Genesis existence, latest Title Event, and UTXO control alignment before recognizing title state.",
+    "bitcoin_canonical": true
+  }
+}

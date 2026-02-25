@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/ip-event.json",
+  "title": "ArtCube Protocol IP Event",
+  "description": "Records intellectual property rights evolution. IP rights changes do not imply title transfer. Child of Genesis (parent/child).",
+  "type": "object",
+  "required": [
+    "protocol", "event_type", "version", "parent_genesis_inscription",
+    "effective_date", "previous_event_pointer", "created_utc",
+    "sub_type", "parties", "description"
+  ],
+  "properties": {
+    "protocol": { "const": "ACP" },
+    "event_type": { "const": "IP_EVENT" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "parent_genesis_inscription": { "type": "string" },
+    "effective_date": { "type": "string", "format": "date" },
+    "previous_event_pointer": { "type": ["string", "null"] },
+    "created_utc": { "type": "string", "format": "date-time" },
+    "sub_type": {
+      "type": "string",
+      "enum": ["IP_ATTESTATION", "RIGHTS_GRANT", "LICENSE", "RIGHTS_CHANGE", "REVOCATION", "DISPUTE"]
+    },
+    "parties": {
+      "type": "object",
+      "properties": {
+        "grantor": { "type": "object" },
+        "grantee": { "type": "object" },
+        "disputant": { "type": "object" },
+        "respondent": { "type": "object" }
+      }
+    },
+    "description": { "type": "string" },
+    "rights_granted": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "revoked_rights": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "limitations": {
+      "type": "object",
+      "properties": {
+        "territory": { "type": "string" },
+        "term": { "type": "string" },
+        "exclusivity": { "type": "string", "enum": ["EXCLUSIVE", "NON_EXCLUSIVE"] },
+        "revocable": { "type": "string", "enum": ["YES", "NO"] }
+      }
+    },
+    "license_type": { "type": "string" },
+    "license_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "licensed_rights": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "revocation_reason": { "type": "string" },
+    "original_grant_pointer": { "type": "string" }
+  },
+  "additionalProperties": false
+}

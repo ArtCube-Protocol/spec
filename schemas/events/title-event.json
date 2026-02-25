@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/title-event.json",
+  "title": "ArtCube Protocol Title Event",
+  "description": "Records ownership state changes. Child of Genesis (parent/child).",
+  "type": "object",
+  "required": [
+    "protocol", "event_type", "version", "parent_genesis_inscription",
+    "effective_date", "previous_event_pointer", "created_utc",
+    "title_status", "current_legal_owner_entity", "utxo_control_entity"
+  ],
+  "properties": {
+    "protocol": { "const": "ACP" },
+    "event_type": { "const": "TITLE_EVENT" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "parent_genesis_inscription": { "type": "string" },
+    "effective_date": { "type": "string", "format": "date" },
+    "previous_event_pointer": { "type": ["string", "null"] },
+    "created_utc": { "type": "string", "format": "date-time" },
+    "title_status": {
+      "type": "string",
+      "enum": ["OWNED", "TRANSFERRED", "PLEDGED", "RELEASED", "CORRECTED"]
+    },
+    "current_legal_owner_entity": {
+      "type": "object",
+      "required": ["name", "jurisdiction"],
+      "properties": {
+        "name": { "type": "string" },
+        "jurisdiction": { "type": "string" }
+      }
+    },
+    "utxo_control_entity": {
+      "type": "object",
+      "required": ["name", "address"],
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" }
+      }
+    },
+    "agreement_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": false
+}

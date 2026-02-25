@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/collection-parent.json",
+  "title": "ArtCube Protocol Collection Parent",
+  "description": "Level 1 inscription grouping related artworks. Child of Entity Root (parent/child).",
+  "type": "object",
+  "required": ["protocol", "inscription_type", "version", "collection", "burn_rule", "created_utc"],
+  "properties": {
+    "protocol": {
+      "const": "ACP"
+    },
+    "inscription_type": {
+      "const": "COLLECTION_PARENT"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "collection": {
+      "type": "object",
+      "required": ["name", "type", "artist"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["EDITION_SERIES", "ONE_OF_ONE", "OPEN_EDITION", "CURATED_SET", "EXHIBITION", "ARCHIVE"]
+        },
+        "description": { "type": "string" },
+        "artist": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string" },
+            "role": { "type": "string" }
+          }
+        },
+        "medium": { "type": "string" },
+        "edition_info": {
+          "type": "object",
+          "properties": {
+            "total_editions": { "type": "integer", "minimum": 1 },
+            "edition_notes": { "type": "string" }
+          }
+        }
+      }
+    },
+    "burn_rule": { "type": "string" },
+    "created_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

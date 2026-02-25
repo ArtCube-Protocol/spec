@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/document-event.json",
+  "title": "ArtCube Protocol Document Event",
+  "description": "Records the existence and integrity of off-chain documents. Child of Genesis (parent/child).",
+  "type": "object",
+  "required": [
+    "protocol", "event_type", "version", "parent_genesis_inscription",
+    "effective_date", "previous_event_pointer", "created_utc",
+    "document_type", "document_hash_sha256", "issuer", "issued_date", "storage_policy"
+  ],
+  "properties": {
+    "protocol": { "const": "ACP" },
+    "event_type": { "const": "DOCUMENT_EVENT" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "parent_genesis_inscription": { "type": "string" },
+    "effective_date": { "type": "string", "format": "date" },
+    "previous_event_pointer": { "type": ["string", "null"] },
+    "created_utc": { "type": "string", "format": "date-time" },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "APPRAISAL", "INSURANCE", "ASSAY", "LEGAL_AGREEMENT", "LICENSE",
+        "CONDITION_REPORT", "PROVENANCE_CERTIFICATE", "TRANSFER_AGREEMENT", "AUTHENTICATION"
+      ]
+    },
+    "document_hash_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "issuer": { "type": "string" },
+    "issued_date": { "type": "string", "format": "date" },
+    "storage_policy": {
+      "type": "string",
+      "enum": ["PERMANENT_PUBLIC", "PERMANENT_PRIVATE", "HASH_ONLY"]
+    },
+    "arweave_tx_id": { "type": "string" },
+    "encryption_method": { "type": "string" }
+  },
+  "if": {
+    "properties": { "storage_policy": { "const": "PERMANENT_PRIVATE" } }
+  },
+  "then": {
+    "required": ["encryption_method"]
+  },
+  "additionalProperties": false
+}
