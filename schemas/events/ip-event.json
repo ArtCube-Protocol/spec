@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/ip-event.json",
   "title": "ArtCube Protocol IP Event",
   "description": "Records intellectual property rights evolution. IP rights changes do not imply title transfer. Child of Genesis (parent/child).",
   "type": "object",

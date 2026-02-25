@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/genesis.json",
   "title": "ArtCube Protocol Genesis Title Anchor",
   "description": "Level 2 inscription establishing the immutable root of trust for an individual artwork. Child of Collection Parent (parent/child).",
   "type": "object",

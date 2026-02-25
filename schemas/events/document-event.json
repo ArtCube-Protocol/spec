@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/document-event.json",
   "title": "ArtCube Protocol Document Event",
   "description": "Records the existence and integrity of off-chain documents. Child of Genesis (parent/child).",
   "type": "object",

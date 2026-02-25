@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/collection-parent.json",
   "title": "ArtCube Protocol Collection Parent",
   "description": "Level 1 inscription grouping related artworks. Child of Entity Root (parent/child).",
   "type": "object",

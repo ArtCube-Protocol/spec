@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/metadata-update.json",
   "title": "ArtCube Protocol Metadata Update",
   "description": "Records corrections or additions to non-critical metadata. Child of Genesis (parent/child).",
   "type": "object",

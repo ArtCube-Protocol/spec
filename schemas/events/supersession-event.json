@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/supersession-event.json",
   "title": "ArtCube Protocol Supersession Event",
   "description": "Used when a material identity error requires a new Genesis inscription. The old Genesis remains on-chain but is marked as superseded. Child of Genesis (parent/child).",
   "type": "object",

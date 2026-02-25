@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ArtCube-Protocol/spec/schemas/events/condition-event.json",
   "title": "ArtCube Protocol Condition Event",
   "description": "Records physical condition of artwork. Child of Genesis (parent/child).",
   "type": "object",
