@@ -450,6 +450,8 @@ The Genesis inscription is the immutable root of trust for an individual artwork
 
 Genesis is **never modified** after inscription. All subsequent changes are recorded as child Events.
 
+The `object_id_core` section is based on the [Object ID](https://www.getty.edu/publications/virtuallibrary/0892365722.html) standard developed by the J. Paul Getty Trust and adopted by ICOM, UNESCO, Interpol, and the FBI. Object ID defines the minimum fields needed to uniquely identify a physical artwork. The ArtCube Protocol inscribes these fields directly on Bitcoin, making them permanent and publicly verifiable.
+
 **Schema:**
 
 ```json
