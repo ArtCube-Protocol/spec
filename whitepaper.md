@@ -107,12 +107,29 @@ The top two levels (Entity Root and Collection Parent) are optional but strongly
 
 | Field | Value |
 |-------|-------|
-| Protocol identifier | `"ACP"` |
-| Metaprotocol tag | `"artcube"` |
-| Content-Type | `application/json` |
-| Version | `"1.0"` |
+| Protocol identifier (JSON) | `"ACP"` |
+| Metaprotocol (envelope tag 7) | `artcube` |
+| Content-Type (envelope tag 1) | `application/json` |
+| Version (JSON) | `"1.0"` |
 
-The metaprotocol tag `"artcube"` is included in the inscription envelope. All ArtCube Protocol inscriptions use `application/json` as the content type.
+**Metaprotocol field (required).** Every ArtCube Protocol inscription MUST include the Ordinals metaprotocol field (tag `7`) with the value `artcube` in the inscription envelope. This is a protocol-level requirement defined by the [Ordinals specification](https://docs.ordinals.com/inscriptions.html#fields). The metaprotocol field allows indexers and explorers to identify ArtCube Protocol inscriptions without parsing the JSON body. It is set at the envelope level during inscription creation — it is not a JSON field.
+
+**Example inscription envelope structure:**
+
+```
+OP_FALSE
+OP_IF
+  OP_PUSH "ord"
+  OP_PUSH 1        (content-type tag)
+  OP_PUSH "application/json"
+  OP_PUSH 7        (metaprotocol tag)
+  OP_PUSH "artcube"
+  OP_PUSH 0        (body separator)
+  OP_PUSH <json payload>
+OP_ENDIF
+```
+
+The `"protocol": "ACP"` field inside the JSON body serves as a secondary identifier for applications that parse the inscription content directly. Both identifiers — the envelope metaprotocol tag and the JSON protocol field — MUST be present on every ArtCube Protocol inscription.
 
 ### 4.2 Inscription Hierarchy
 
