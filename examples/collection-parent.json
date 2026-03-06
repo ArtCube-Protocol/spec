@@ -3,17 +3,17 @@
   "inscription_type": "COLLECTION_PARENT",
   "version": "1.0",
   "collection": {
-    "name": "Battle of the Centaurs — Precious Metal Editions",
+    "name": "Eternal Creations — Michelangelo Posthumous Originals",
     "type": "EDITION_SERIES",
-    "description": "Posthumous original castings from Michelangelo's Battle of the Centaurs marble relief (c.1490-1492), executed in precious metals by Treasure Investments Corp. Each edition is a unique single casting in a different precious metal.",
+    "description": "Authenticated posthumous original castings from Michelangelo's master molds, executed in precious metals. Each piece is a unique single casting preserving the original composition with museum-grade fidelity.",
     "artist": {
       "name": "Michelangelo Buonarroti",
       "role": "Original composition"
     },
-    "medium": "Precious metal castings (silver, gold, platinum)",
+    "medium": "Precious metal castings (silver, gold, platinum) via lost-wax process",
     "edition_info": {
-      "total_editions": 3,
-      "edition_notes": "One edition each in .999 fine silver, .999 fine gold, and .999 fine platinum"
+      "total_editions": 150,
+      "edition_notes": "150+ authenticated posthumous originals spanning multiple masterpieces including Battle of the Centaurs, The Pietà, and David. Each casting is a one-of-one edition in a specific precious metal."
     }
   },
   "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid."

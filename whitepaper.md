@@ -299,7 +299,7 @@ A Collection Parent groups related artworks. It is a child of an Entity Root ins
   "collection": {
     "name": "Battle of the Centaurs — Precious Metal Editions",
     "type": "EDITION_SERIES",
-    "description": "Posthumous original castings from Michelangelo's Battle of the Centaurs marble relief (c.1490-1492), executed in precious metals by Treasure Investments Corp.",
+    "description": "Posthumous original castings from Michelangelo's Battle of the Centaurs marble relief (c.1490-1492), executed in precious metals by Treasure Investment Corporation",
     "artist": {
       "name": "Michelangelo Buonarroti",
       "role": "Original composition"
@@ -325,15 +325,12 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
 ```json
 {
   "protocol": "artcube",
-  "standard": "ObjectID + Title Anchor + IP Baseline",
   "inscription_type": "GENESIS_TITLE_ANCHOR",
   "version": "1.0",
 
   "record": {
     "asset_id": "string (required)",
-    "object_id_record_date": "YYYY-MM-DD (required)",
-    "language": "language code (required)",
-    "spv_reference_id": "string (optional)"
+    "object_id_record_date": "YYYY-MM-DD (required)"
   },
 
   "object_id_core": {
@@ -344,11 +341,9 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
     "maker": "object (required)",
     "materials_and_techniques": "object (required)",
     "measurements": "object (required)",
-    "inscriptions_and_markings": "object (required — mark UNKNOWN if unverified)",
-    "distinguishing_features": "object (required — mark UNKNOWN if unverified)"
+    "inscriptions_and_markings": "object (optional)",
+    "distinguishing_features": "object (optional)"
   },
-
-  "provenance_summary": "object (optional — historical provenance narrative)",
 
   "ownership_at_genesis": {
     "legal_owner_entity": {
@@ -365,13 +360,10 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
     "title_anchor": true,
     "governing_law": "string (required)",
     "hybrid_transfer_rule": "Canonical title recognition requires both (i) transfer of the Genesis inscription UTXO to the new lawful authority and (ii) an appended Title Event recording the transfer.",
-    "canonical_title_determination": "Current title state is derived from alignment between Genesis UTXO control and the most recent valid Title Event referencing this Genesis.",
-    "technical_vs_legal_notice": "Bitcoin enforces technical control through UTXO ownership. Legal ownership remains governed by applicable law and contractual agreement.",
     "statement": "This Genesis inscription serves as the canonical Bitcoin provenance and legal title anchor for the physical artwork identified herein."
   },
 
   "intellectual_property": {
-    "ip_version": "1.0",
     "copyright": {
       "status": "OWNED | LICENSED | PUBLIC_DOMAIN | UNKNOWN | DISPUTED",
       "copyright_owner": { "name": "string", "type": "string", "jurisdiction": "string" },
@@ -410,26 +402,6 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
     "digital_asset_rights": "object (optional)",
     "royalties": "object (optional)",
     "disclosures": "object (optional)"
-  },
-
-  "update_policy": {
-    "append_only": true,
-    "allowed_event_types": [
-      "TITLE_EVENT",
-      "DOCUMENT_EVENT",
-      "CONDITION_EVENT",
-      "CUSTODY_EVENT",
-      "IP_EVENT",
-      "METADATA_UPDATE",
-      "CORRECTION_EVENT",
-      "SUPERSESSION_EVENT"
-    ],
-    "correction_rule": "Genesis may not be edited. Minor errors require Correction Events. Material identity errors require new Genesis plus Supersession Event."
-  },
-
-  "bridge_integrity": {
-    "bridge_rule": "External blockchain integrations must verify Genesis existence, latest Title Event, and UTXO control alignment before recognizing title state.",
-    "bitcoin_canonical": true
   }
 }
 ```
@@ -441,14 +413,11 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
 ```json
 {
   "protocol": "artcube",
-  "standard": "ObjectID + Title Anchor + IP Baseline",
   "inscription_type": "GENESIS_TITLE_ANCHOR",
   "version": "1.0",
   "record": {
     "asset_id": "TIC-SBC-SLV-2022-001",
-    "spv_reference_id": "SBCI-ART-0001",
-    "object_id_record_date": "2026-02-17",
-    "language": "en-US"
+    "object_id_record_date": "2026-02-17"
   },
   "object_id_core": {
     "type_of_object": "Sculpture — High Relief Plaque (Posthumous Original Casting), One-of-One Silver Edition",
@@ -469,7 +438,7 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
         "role": "Wax stage / historic master mold lineage association"
       },
       "metal_casting_executor": {
-        "name": "Treasure Investments Corp. (d/b/a Foundry Michelangelo)",
+        "name": "Treasure Investment Corporation (d/b/a Foundry Michelangelo)",
         "location": "Battle Ground, Washington, USA",
         "role": "Final .999 silver casting / metal pour",
         "year": 2022
@@ -480,25 +449,9 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
       "techniques": [{ "name": "Lost-wax casting (cire perdue)", "confirmed": true }]
     },
     "measurements": {
-      "dimensions_inches": { "height": 31.5, "width": 35.0, "depth": 4.5 },
       "dimensions_cm": { "height": 80.0, "width": 88.9, "depth": 11.4 },
-      "weight": { "troy_ounces": 2333, "kilograms": 72.57 }
-    },
-    "inscriptions_and_markings": {
-      "confirmed": false,
-      "items": [],
-      "notes": "No metal-stage inscriptions or markings asserted without physical verification."
-    },
-    "distinguishing_features": {
-      "confirmed": false,
-      "features": [],
-      "notes": "Distinctive casting micro-variations and surface identifiers to be appended upon inspection."
+      "weight_kg": 72.57
     }
-  },
-  "provenance_summary": {
-    "historical_origin": "Original marble relief sculpted c.1490–1492 by Michelangelo Buonarroti.",
-    "wax_lineage_association": "Historic master mold lineage associated with Fonderia Artistica Ferdinando Marinelli.",
-    "final_casting": "Final .999 fine silver casting executed in 2022 in Battle Ground, Washington, USA."
   },
   "ownership_at_genesis": {
     "legal_owner_entity": {
@@ -506,7 +459,7 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
       "jurisdiction": "Florida, USA"
     },
     "physical_custodian": {
-      "name": "Treasure Investments Corp.",
+      "name": "Treasure Investment Corporation",
       "location": "Battle Ground, Washington, USA"
     }
   },
@@ -514,18 +467,10 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
     "title_anchor": true,
     "governing_law": "Florida, USA",
     "hybrid_transfer_rule": "Canonical title recognition requires both (i) transfer of the Genesis inscription UTXO to the new lawful authority and (ii) an appended Title Event recording the transfer.",
-    "canonical_title_determination": "Current title state is derived from alignment between Genesis UTXO control and the most recent valid Title Event referencing this Genesis.",
-    "technical_vs_legal_notice": "Bitcoin enforces technical control through UTXO ownership. Legal ownership remains governed by applicable law and contractual agreement.",
     "statement": "This Genesis inscription serves as the canonical Bitcoin provenance and legal title anchor for the physical artwork identified herein."
   },
   "intellectual_property": {
-    "ip_version": "1.0",
-    "copyright": {
-      "status": "UNKNOWN",
-      "copyright_owner": { "name": null, "type": "UNKNOWN", "jurisdiction": null },
-      "copyright_year": null,
-      "registration": { "registered": "UNKNOWN", "registration_id": null, "jurisdiction": null }
-    },
+    "copyright": { "status": "UNKNOWN" },
     "moral_rights": {
       "waived": "UNKNOWN",
       "attribution_required": "YES",
@@ -550,18 +495,6 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
         "AI_GENERATION_ALLOWED", "SUBLICENSE"
       ]
     }
-  },
-  "update_policy": {
-    "append_only": true,
-    "allowed_event_types": [
-      "TITLE_EVENT", "DOCUMENT_EVENT", "CONDITION_EVENT", "CUSTODY_EVENT",
-      "IP_EVENT", "METADATA_UPDATE", "CORRECTION_EVENT", "SUPERSESSION_EVENT"
-    ],
-    "correction_rule": "Genesis may not be edited. Minor errors require Correction Events. Material identity errors require new Genesis plus Supersession Event."
-  },
-  "bridge_integrity": {
-    "bridge_rule": "External blockchain integrations must verify Genesis existence, latest Title Event, and UTXO control alignment before recognizing title state.",
-    "bitcoin_canonical": true
   }
 }
 ```
@@ -829,8 +762,7 @@ Records corrections or additions to non-critical metadata. Used for updated meas
   "effective_date": "2026-08-15",
   "previous_event_pointer": null,
   "updated_fields": {
-    "measurements.weight.troy_ounces": 2335,
-    "measurements.weight.kilograms": 72.63
+    "measurements.weight_kg": 72.63
   },
   "reason": "Updated weight after precision re-measurement during condition assessment."
 }

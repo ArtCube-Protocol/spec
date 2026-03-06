@@ -3,31 +3,27 @@
   "description": "Level 2 inscription establishing the immutable root of trust for an individual artwork. Child of Collection Parent (parent/child).",
   "type": "object",
   "required": [
-    "protocol", "standard", "inscription_type", "version",
+    "protocol", "inscription_type", "version",
     "record", "object_id_core", "ownership_at_genesis",
-    "legal_title_anchor", "intellectual_property", "update_policy", "bridge_integrity"
+    "legal_title_anchor", "intellectual_property"
   ],
   "properties": {
     "protocol": { "const": "artcube" },
-    "standard": { "const": "ObjectID + Title Anchor + IP Baseline" },
     "inscription_type": { "const": "GENESIS_TITLE_ANCHOR" },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
     "record": {
       "type": "object",
-      "required": ["asset_id", "object_id_record_date", "language"],
+      "required": ["asset_id", "object_id_record_date"],
       "properties": {
         "asset_id": { "type": "string" },
-        "object_id_record_date": { "type": "string", "format": "date" },
-        "language": { "type": "string" },
-        "spv_reference_id": { "type": "string" }
+        "object_id_record_date": { "type": "string", "format": "date" }
       }
     },
     "object_id_core": {
       "type": "object",
       "required": [
         "type_of_object", "title", "subject", "date_or_period",
-        "maker", "materials_and_techniques", "measurements",
-        "inscriptions_and_markings", "distinguishing_features"
+        "maker", "materials_and_techniques", "measurements"
       ],
       "properties": {
         "type_of_object": { "type": "string" },
@@ -63,12 +59,25 @@
             }
           }
         },
-        "measurements": { "type": "object" },
+        "measurements": {
+          "type": "object",
+          "required": ["dimensions_cm"],
+          "properties": {
+            "dimensions_cm": {
+              "type": "object",
+              "properties": {
+                "height": { "type": "number" },
+                "width": { "type": "number" },
+                "depth": { "type": "number" }
+              }
+            },
+            "weight_kg": { "type": "number" }
+          }
+        },
         "inscriptions_and_markings": { "type": "object" },
         "distinguishing_features": { "type": "object" }
       }
     },
-    "provenance_summary": { "type": "object" },
     "ownership_at_genesis": {
       "type": "object",
       "required": ["legal_owner_entity", "physical_custodian"],
@@ -93,21 +102,18 @@
     },
     "legal_title_anchor": {
       "type": "object",
-      "required": ["title_anchor", "governing_law", "hybrid_transfer_rule", "canonical_title_determination", "statement"],
+      "required": ["title_anchor", "governing_law", "hybrid_transfer_rule", "statement"],
       "properties": {
         "title_anchor": { "const": true },
         "governing_law": { "type": "string" },
         "hybrid_transfer_rule": { "type": "string" },
-        "canonical_title_determination": { "type": "string" },
-        "technical_vs_legal_notice": { "type": "string" },
         "statement": { "type": "string" }
       }
     },
     "intellectual_property": {
       "type": "object",
-      "required": ["ip_version", "copyright", "moral_rights", "rights_grants"],
+      "required": ["copyright", "moral_rights", "rights_grants"],
       "properties": {
-        "ip_version": { "type": "string" },
         "copyright": {
           "type": "object",
           "required": ["status"],
@@ -156,32 +162,6 @@
         "digital_asset_rights": { "type": "object" },
         "royalties": { "type": "object" },
         "disclosures": { "type": "object" }
-      }
-    },
-    "update_policy": {
-      "type": "object",
-      "required": ["append_only", "allowed_event_types", "correction_rule"],
-      "properties": {
-        "append_only": { "const": true },
-        "allowed_event_types": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "TITLE_EVENT", "DOCUMENT_EVENT", "CONDITION_EVENT", "CUSTODY_EVENT",
-              "IP_EVENT", "METADATA_UPDATE", "CORRECTION_EVENT", "SUPERSESSION_EVENT"
-            ]
-          }
-        },
-        "correction_rule": { "type": "string" }
-      }
-    },
-    "bridge_integrity": {
-      "type": "object",
-      "required": ["bridge_rule", "bitcoin_canonical"],
-      "properties": {
-        "bridge_rule": { "type": "string" },
-        "bitcoin_canonical": { "const": true }
       }
     }
   },
