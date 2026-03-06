@@ -110,6 +110,9 @@ The top two levels (Entity Root and Collection Parent) are optional but strongly
 | Protocol identifier (JSON) | `"artcube"` |
 | Metaprotocol (envelope tag 7) | `artcube` |
 | Content-Type (envelope tag 1) | `application/json` |
+| Metadata (envelope tag 5) | CBOR — human-readable summary |
+| Properties (envelope tag 17) | CBOR — structured title and traits |
+| Properties encoding (envelope tag 19) | `"cbor"` |
 | Version (JSON) | `"1.0"` |
 
 **Metaprotocol field (required).** Every ArtCube Protocol inscription MUST include the Ordinals metaprotocol field (tag `7`) with the value `artcube` in the inscription envelope. This is a protocol-level requirement defined by the [Ordinals specification](https://docs.ordinals.com/inscriptions.html#fields). The metaprotocol field allows indexers and explorers to identify ArtCube Protocol inscriptions without parsing the JSON body. It is set at the envelope level during inscription creation — it is not a JSON field.
@@ -120,16 +123,143 @@ The top two levels (Entity Root and Collection Parent) are optional but strongly
 OP_FALSE
 OP_IF
   OP_PUSH "ord"
-  OP_PUSH 1        (content-type tag)
+  OP_PUSH 1        (content-type)
   OP_PUSH "application/json"
-  OP_PUSH 7        (metaprotocol tag)
+  OP_PUSH 5        (metadata — CBOR)
+  OP_PUSH <cbor metadata>
+  OP_PUSH 7        (metaprotocol)
   OP_PUSH "artcube"
+  OP_PUSH 17       (properties — CBOR)
+  OP_PUSH <cbor properties>
+  OP_PUSH 19       (properties encoding)
+  OP_PUSH "cbor"
   OP_PUSH 0        (body separator)
   OP_PUSH <json payload>
 OP_ENDIF
 ```
 
 The `"protocol": "artcube"` field inside the JSON body serves as a secondary identifier for applications that parse the inscription content directly. Both identifiers — the envelope metaprotocol tag and the JSON protocol field — MUST be present on every ArtCube Protocol inscription.
+
+#### 4.1.1 Metadata (Tag 5)
+
+Every ArtCube Protocol inscription SHOULD include a **metadata** field (envelope tag `5`) containing a CBOR-encoded map of human-readable summary fields. This allows generic Ordinals explorers to display meaningful information about the inscription without parsing the JSON body.
+
+Metadata is a free-form key-value map with string keys. The ArtCube Protocol defines the following conventions:
+
+| Key | Present on | Value |
+|-----|-----------|-------|
+| `p` | All | `"artcube"` |
+| `type` | All | Inscription type (e.g. `"ENTITY_ROOT"`, `"GENESIS_TITLE_ANCHOR"`) |
+| `name` | Entity Root | Entity name |
+| `entity_type` | Entity Root | Entity type (e.g. `"ORGANIZATION"`) |
+| `collection` | Collection Parent | Collection name |
+| `artist` | Collection Parent, Genesis | Artist name |
+| `title` | Genesis | Artwork title |
+| `medium` | Genesis | Medium description |
+| `owner` | Genesis | Legal owner at genesis |
+| `event` | Events | Event type (e.g. `"TITLE_EVENT"`) |
+| `status` | Title Event | Title status (e.g. `"OWNED"`) |
+| `document_type` | Document Event | Document type (e.g. `"ASSAY"`) |
+| `custodian` | Custody Event | Custodian name |
+| `sub_type` | IP Event | IP event subtype |
+
+**Example metadata for a Genesis inscription:**
+
+```json
+{
+  "p": "artcube",
+  "type": "GENESIS_TITLE_ANCHOR",
+  "title": "Battle of the Centaurs",
+  "artist": "Michelangelo Buonarroti",
+  "medium": ".999 Fine Silver",
+  "owner": "Silver Battle of the Centaurs, Inc."
+}
+```
+
+#### 4.1.2 Properties (Tag 17)
+
+Every ArtCube Protocol inscription SHOULD include **properties** (envelope tag `17`) containing CBOR-encoded structured attributes. Properties follow the Ordinals specification schema using integer keys, enabling marketplace filtering and trait-based discovery.
+
+When properties are CBOR-encoded, the **properties encoding** tag (`19`) MUST be set to `"cbor"`.
+
+The properties schema uses integer keys as defined by the Ordinals specification:
+
+```
+Properties = { 1: Attributes }
+Attributes = { 0: <title>, 1: <traits> }
+```
+
+- **Title** (Attributes key `0`): A human-readable title for the inscription. See the table below for conventions per inscription type.
+- **Traits** (Attributes key `1`): A map of string key-value pairs representing filterable attributes.
+
+**Title conventions:**
+
+| Inscription type | Title format | Example |
+|-----------------|-------------|---------|
+| Entity Root | Entity name | `"ArtCube"` |
+| Collection Parent | Collection name | `"Eternal Creations — Michelangelo Posthumous Originals"` |
+| Genesis | Artwork title | `"Battle of the Centaurs"` |
+| Title Event | `"Title Event — {status}"` | `"Title Event — OWNED"` |
+| Document Event | `"Document Event — {document_type}"` | `"Document Event — ASSAY"` |
+| Condition Event | `"Condition Event — {date}"` | `"Condition Event — 2026-03-14"` |
+| Custody Event | `"Custody Event — {custodian}"` | `"Custody Event — Miami Art Storage Inc."` |
+| IP Event | `"IP Event — {sub_type}"` | `"IP Event — RIGHTS_GRANT"` |
+
+**Trait conventions:**
+
+All ArtCube Protocol inscriptions SHOULD include a `"Protocol"` trait with value `"artcube"` and a `"Type"` trait with the inscription type. Additional traits vary by inscription type:
+
+| Trait key | Present on | Value |
+|-----------|-----------|-------|
+| `Protocol` | All | `"artcube"` |
+| `Type` | All | Inscription type (e.g. `"Genesis"`, `"Entity Root"`) |
+| `Entity` | Entity Root | Entity name |
+| `Jurisdiction` | Entity Root, Genesis | Jurisdiction |
+| `Custody Model` | Entity Root | `"MULTISIG"` or `"SINGLE_SIG"` |
+| `Collection` | Collection Parent | Collection name |
+| `Collection Type` | Collection Parent | e.g. `"EDITION_SERIES"` |
+| `Artist` | Collection Parent, Genesis | Artist name |
+| `Medium` | Collection Parent, Genesis | Medium |
+| `Title` | Genesis | Artwork title |
+| `Period` | Genesis | Date or period of original work |
+| `Owner` | Genesis | Legal owner name |
+| `Status` | Title Event | e.g. `"OWNED"`, `"TRANSFERRED"` |
+| `Document` | Document Event | e.g. `"ASSAY"`, `"APPRAISAL"` |
+| `Custodian` | Custody Event | Custodian name |
+| `Location` | Custody Event | City/country |
+
+**Example properties for a Genesis inscription (conceptual JSON representation of CBOR):**
+
+```json
+{
+  "1": {
+    "0": "Battle of the Centaurs",
+    "1": {
+      "Protocol": "artcube",
+      "Type": "Genesis",
+      "Artist": "Michelangelo Buonarroti",
+      "Medium": ".999 Fine Silver",
+      "Period": "c.1490–1492",
+      "Owner": "Silver Battle of the Centaurs, Inc.",
+      "Collection": "Eternal Creations"
+    }
+  }
+}
+```
+
+#### 4.1.3 Envelope Layer Summary
+
+The three envelope layers serve distinct purposes:
+
+| Layer | Tag | Format | Purpose | Consumer |
+|-------|-----|--------|---------|----------|
+| Body | (after tag 0) | JSON | Canonical protocol data — source of truth | ArtCube Protocol validators |
+| Metadata | 5 | CBOR | Human-readable summary | Generic explorers (ordiscan, etc.) |
+| Properties | 17 | CBOR | Structured title and filterable traits | Marketplaces (Magic Eden, etc.) |
+
+The JSON body is the canonical data. Metadata and properties are **derived summaries** — they make ArtCube inscriptions discoverable in the existing Ordinals ecosystem without requiring ArtCube-specific tooling. If there is any conflict between the body and envelope fields, the JSON body takes precedence.
+
+---
 
 ### 4.2 Parent/Child Inscriptions
 
