@@ -1,0 +1,21 @@
+{
+  "protocol": "artcube",
+  "event_type": "IP_EVENT",
+  "version": "1.0",
+  "parent_genesis_inscription": "<genesis_inscription_id>",
+  "effective_date": "2026-05-01",
+  "previous_event_pointer": null,
+  "sub_type": "RIGHTS_GRANT",
+  "parties": {
+    "grantor": { "name": "Silver Battle of the Centaurs, Inc." },
+    "grantee": { "name": "Art Publishing House LLC" }
+  },
+  "description": "Grant of high-resolution reproduction rights for exhibition catalogue.",
+  "rights_granted": ["PUBLISH_IMAGES_HIGHRES", "REPRODUCE_PRINTS"],
+  "limitations": {
+    "territory": "North America",
+    "term": "5 years",
+    "exclusivity": "NON_EXCLUSIVE",
+    "revocable": "YES"
+  }
+}

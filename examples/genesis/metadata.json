@@ -1,0 +1,98 @@
+{
+  "protocol": "artcube",
+  "inscription_type": "GENESIS_TITLE_ANCHOR",
+  "version": "1.0",
+  "record": {
+    "asset_id": "TIC-SBC-SLV-2022-001",
+    "object_id_record_date": "2026-02-17"
+  },
+  "object_id_core": {
+    "type_of_object": "Sculpture — High Relief Plaque (Posthumous Original Casting), One-of-One Silver Edition",
+    "title": "Battle of the Centaurs",
+    "subject": "Mythological battle scene (Lapiths vs. Centaurs) depicted in dense multi-figure combat relief.",
+    "date_or_period": {
+      "original_work": "c.1490–1492",
+      "silver_casting": "2022"
+    },
+    "maker": {
+      "original_artist": {
+        "name": "Michelangelo Buonarroti",
+        "role": "Original composition"
+      },
+      "wax_lineage_association": {
+        "name": "Fonderia Artistica Ferdinando Marinelli",
+        "location": "Florence, Italy",
+        "role": "Wax stage / historic master mold lineage association"
+      },
+      "metal_casting_executor": {
+        "name": "Treasure Investment Corporation (d/b/a Foundry Michelangelo)",
+        "location": "Battle Ground, Washington, USA",
+        "role": "Final .999 silver casting / metal pour",
+        "year": 2022
+      }
+    },
+    "materials_and_techniques": {
+      "materials": [
+        { "name": ".999 Fine Silver", "confirmed": true }
+      ],
+      "techniques": [
+        { "name": "Lost-wax casting (cire perdue)", "confirmed": true }
+      ]
+    },
+    "measurements": {
+      "dimensions_cm": { "height": 80.0, "width": 88.9, "depth": 11.4 },
+      "weight_kg": 72.57
+    }
+  },
+  "ownership_at_genesis": {
+    "legal_owner_entity": {
+      "name": "Silver Battle of the Centaurs, Inc.",
+      "jurisdiction": "Florida, USA"
+    },
+    "physical_custodian": {
+      "name": "Treasure Investment Corporation",
+      "location": "Battle Ground, Washington, USA"
+    }
+  },
+  "legal_title_anchor": {
+    "title_anchor": true,
+    "governing_law": "Florida, USA",
+    "hybrid_transfer_rule": "Canonical title recognition requires both (i) transfer of the Genesis inscription UTXO to the new lawful authority and (ii) an appended Title Event recording the transfer.",
+    "statement": "This Genesis inscription serves as the canonical Bitcoin provenance and legal title anchor for the physical artwork identified herein."
+  },
+  "intellectual_property": {
+    "copyright": {
+      "status": "UNKNOWN"
+    },
+    "moral_rights": {
+      "waived": "UNKNOWN",
+      "attribution_required": "YES",
+      "integrity_rights_notes": null
+    },
+    "rights_grants": {
+      "baseline_policy": "BASELINE_DISPLAY_RIGHTS",
+      "granted_to_holder": {
+        "holder_scope": "ALIGNED_HOLDER",
+        "rights": ["DISPLAY_NONCOMMERCIAL", "EXHIBIT", "PUBLISH_IMAGES_LOWRES"],
+        "status": "GRANTED",
+        "limitations": {
+          "territory": "WORLDWIDE",
+          "term": "PERPETUAL",
+          "exclusivity": "NON_EXCLUSIVE",
+          "revocable": "NO",
+          "notes": "Baseline display rights only. All commercial, derivative, reproduction, AI, sublicensing, or merchandising rights require explicit IP Event grants."
+        }
+      },
+      "not_granted_by_default": [
+        "PUBLISH_IMAGES_HIGHRES",
+        "REPRODUCE_PRINTS",
+        "MERCHANDISING",
+        "COMMERCIALIZE",
+        "CREATE_DERIVATIVES",
+        "AI_TRAINING_ALLOWED",
+        "AI_GENERATION_ALLOWED",
+        "SUBLICENSE"
+      ]
+    }
+  }
+}

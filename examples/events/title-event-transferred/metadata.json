@@ -1,0 +1,18 @@
+{
+  "protocol": "artcube",
+  "event_type": "TITLE_EVENT",
+  "version": "1.0",
+  "parent_genesis_inscription": "<genesis_inscription_id>",
+  "effective_date": "2026-06-15",
+  "previous_event_pointer": "<title_event_owned_inscription_id>",
+  "title_status": "TRANSFERRED",
+  "current_legal_owner_entity": {
+    "name": "Collector Holdings LLC",
+    "jurisdiction": "New York, USA"
+  },
+  "utxo_control_entity": {
+    "name": "Collector Holdings LLC",
+    "address": "bc1q_new..."
+  },
+  "agreement_hash": "c9d0e1f2..."
+}

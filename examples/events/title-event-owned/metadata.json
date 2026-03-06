@@ -1,0 +1,17 @@
+{
+  "protocol": "artcube",
+  "event_type": "TITLE_EVENT",
+  "version": "1.0",
+  "parent_genesis_inscription": "<genesis_inscription_id>",
+  "effective_date": "2026-02-17",
+  "previous_event_pointer": null,
+  "title_status": "OWNED",
+  "current_legal_owner_entity": {
+    "name": "Silver Battle of the Centaurs, Inc.",
+    "jurisdiction": "Florida, USA"
+  },
+  "utxo_control_entity": {
+    "name": "Silver Battle of the Centaurs, Inc.",
+    "address": "bc1q..."
+  }
+}

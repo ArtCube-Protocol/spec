@@ -2,7 +2,7 @@
 
 This document walks through a complete ArtCube Protocol provenance chain for the **Silver Battle of the Centaurs** — a .999 fine silver sculpture posthumously cast from Michelangelo's original marble relief.
 
-> **Envelope data.** Each inscription in this chain includes metadata (tag 5) and properties (tag 17) in the Ordinals envelope. See [`envelopes.md`](./envelopes.md) for the complete envelope specifications for every inscription in this chain.
+> **Envelope structure.** The inscription body is a visual asset (image for root/parent/genesis, plain text for events). The ArtCube Protocol JSON goes in metadata (tag 5), not the body. Each example folder contains `metadata.json` (protocol data), `properties.json` (title + traits for genesis, title only for others), and for events a `body.txt` (the plain text label).
 
 ---
 
@@ -26,11 +26,11 @@ Entity Root: Trio / BitBasel (ORGANIZATION, Florida, USA)
 ```
 
 Each inscription uses the following envelope tags:
-- **Tag 1** (content-type): `application/json`
+- **Tag 1** (content-type): `image/*` for root/parent/genesis, `text/plain` for events
 - **Tag 3** (parent): Parent inscription ID (except Entity Root)
-- **Tag 5** (metadata): CBOR summary for explorer display
+- **Tag 5** (metadata): The ArtCube Protocol JSON (CBOR)
 - **Tag 7** (metaprotocol): `artcube`
-- **Tag 17** (properties): CBOR title and traits for marketplace filtering
+- **Tag 17** (properties): Title (+ traits on Genesis only) (CBOR)
 - **Tag 19** (properties encoding): `cbor`
 
 ---
@@ -45,9 +45,7 @@ Trio/BitBasel inscribes an Entity Root on Bitcoin establishing their organizatio
 - **Custody:** 2-of-3 multisig
 - **No parent** — this is a top-level inscription
 
-See: [`entity-root.json`](./entity-root.json)
-
-**Envelope:** See [`envelopes.md` — Entity Root](./envelopes.md#entity-root) for metadata, properties, and full envelope structure.
+See: [`entity-root/metadata.json`](./entity-root/metadata.json)
 
 ---
 
@@ -60,9 +58,7 @@ Using the Entity Root UTXO as input (parent/child), Trio/BitBasel inscribes a Co
 - **Total editions:** 3 (silver, gold, platinum)
 - **Tag 3:** Entity Root inscription ID
 
-See: [`collection-parent.json`](./collection-parent.json)
-
-**Envelope:** See [`envelopes.md` — Collection Parent](./envelopes.md#collection-parent) for metadata, properties, and full envelope structure.
+See: [`collection-parent/metadata.json`](./collection-parent/metadata.json)
 
 ---
 
@@ -78,9 +74,7 @@ Using the Collection Parent UTXO as input (parent/child), the Genesis inscriptio
 
 This is the permanent, immutable root of trust for this artwork. It is never modified.
 
-See: [`genesis.json`](./genesis.json)
-
-**Envelope:** See [`envelopes.md` — Genesis Title Anchor](./envelopes.md#genesis-title-anchor) for metadata, properties, and full envelope structure.
+See: [`genesis/metadata.json`](./genesis/metadata.json)
 
 ---
 
@@ -108,7 +102,7 @@ The Genesis holder inscribes the first Title Event confirming ownership.
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "TITLE_EVENT", "event": "TITLE_EVENT", "status": "OWNED" }`
+**Metadata (tag 5):** The full Title Event JSON above, CBOR-encoded.
 **Properties title:** `"Title Event — OWNED"`
 
 **Verification:** UTXO holder matches Title Event → title state is **VALID**.
@@ -136,7 +130,7 @@ An assay certificate confirming the silver purity is uploaded to Arweave and anc
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "DOCUMENT_EVENT", "event": "DOCUMENT_EVENT", "document_type": "ASSAY" }`
+**Metadata (tag 5):** The full Document Event JSON above, CBOR-encoded.
 **Properties title:** `"Document Event — ASSAY"`
 
 **Verification:** Fetch from Arweave → SHA-256 → compare to Bitcoin hash → integrity confirmed.
@@ -162,7 +156,7 @@ An assay certificate confirming the silver purity is uploaded to Arweave and anc
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "DOCUMENT_EVENT", "event": "DOCUMENT_EVENT", "document_type": "CONDITION_REPORT" }`
+**Metadata (tag 5):** The full Document Event JSON above, CBOR-encoded.
 **Properties title:** `"Document Event — CONDITION_REPORT"`
 
 Note: `previous_event_pointer` references the assay Document Event — building the per-type linked list.
@@ -186,7 +180,7 @@ Note: `previous_event_pointer` references the assay Document Event — building 
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "CONDITION_EVENT", "event": "CONDITION_EVENT", "inspector": "Art Conservation Services LLC" }`
+**Metadata (tag 5):** The full Condition Event JSON above, CBOR-encoded.
 **Properties title:** `"Condition Event — 2026-03-14"`
 
 ---
@@ -214,7 +208,7 @@ Note: `previous_event_pointer` references the assay Document Event — building 
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "CUSTODY_EVENT", "event": "CUSTODY_EVENT", "custodian": "Miami Art Storage Inc." }`
+**Metadata (tag 5):** The full Custody Event JSON above, CBOR-encoded.
 **Properties title:** `"Custody Event — Miami Art Storage Inc."`
 
 ---
@@ -247,7 +241,7 @@ High-resolution reproduction rights granted for a catalogue publication.
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "IP_EVENT", "event": "IP_EVENT", "sub_type": "RIGHTS_GRANT" }`
+**Metadata (tag 5):** The full IP Event JSON above, CBOR-encoded.
 **Properties title:** `"IP Event — RIGHTS_GRANT"`
 
 ---
@@ -277,7 +271,7 @@ The artwork is sold. Both the UTXO and a Title Event record the transfer.
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "TITLE_EVENT", "event": "TITLE_EVENT", "status": "TRANSFERRED" }`
+**Metadata (tag 5):** The full Title Event JSON above, CBOR-encoded.
 **Properties title:** `"Title Event — TRANSFERRED"`
 
 The Genesis UTXO is simultaneously transferred to the new owner's address. Both conditions of the hybrid transfer model are satisfied → title state is **VALID**.
@@ -309,7 +303,7 @@ The new owner moves the artwork to their vault.
 }
 ```
 
-**Metadata:** `{ "p": "artcube", "type": "CUSTODY_EVENT", "event": "CUSTODY_EVENT", "custodian": "Collector Holdings LLC" }`
+**Metadata (tag 5):** The full Custody Event JSON above, CBOR-encoded.
 **Properties title:** `"Custody Event — Collector Holdings LLC"`
 
 ---

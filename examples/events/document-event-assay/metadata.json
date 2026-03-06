@@ -1,0 +1,14 @@
+{
+  "protocol": "artcube",
+  "event_type": "DOCUMENT_EVENT",
+  "version": "1.0",
+  "parent_genesis_inscription": "<genesis_inscription_id>",
+  "effective_date": "2026-03-01",
+  "previous_event_pointer": null,
+  "document_type": "ASSAY",
+  "document_hash_sha256": "a1b2c3d4...",
+  "issuer": "Independent Precious Metals Lab",
+  "issued_date": "2026-02-28",
+  "storage_policy": "PERMANENT_PUBLIC",
+  "arweave_tx_id": "ar_tx_001..."
+}

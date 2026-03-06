@@ -1,0 +1,12 @@
+{
+  "protocol": "artcube",
+  "event_type": "CONDITION_EVENT",
+  "version": "1.0",
+  "parent_genesis_inscription": "<genesis_inscription_id>",
+  "effective_date": "2026-03-14",
+  "previous_event_pointer": null,
+  "inspection_date": "2026-03-14",
+  "inspector_entity": "Art Conservation Services LLC",
+  "condition_summary": "Excellent condition. No visible damage, tarnishing, or structural compromise.",
+  "media_hashes": ["sha256:img001...", "sha256:img002..."]
+}
