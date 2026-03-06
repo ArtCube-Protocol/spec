@@ -8,7 +8,7 @@
     "new_genesis_inscription", "reason"
   ],
   "properties": {
-    "protocol": { "const": "ACP" },
+    "protocol": { "const": "artcube" },
     "event_type": { "const": "SUPERSESSION_EVENT" },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
     "parent_genesis_inscription": { "type": "string" },

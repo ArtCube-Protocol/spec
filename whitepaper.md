@@ -107,7 +107,7 @@ The top two levels (Entity Root and Collection Parent) are optional but strongly
 
 | Field | Value |
 |-------|-------|
-| Protocol identifier (JSON) | `"ACP"` |
+| Protocol identifier (JSON) | `"artcube"` |
 | Metaprotocol (envelope tag 7) | `artcube` |
 | Content-Type (envelope tag 1) | `application/json` |
 | Version (JSON) | `"1.0"` |
@@ -129,9 +129,60 @@ OP_IF
 OP_ENDIF
 ```
 
-The `"protocol": "ACP"` field inside the JSON body serves as a secondary identifier for applications that parse the inscription content directly. Both identifiers — the envelope metaprotocol tag and the JSON protocol field — MUST be present on every ArtCube Protocol inscription.
+The `"protocol": "artcube"` field inside the JSON body serves as a secondary identifier for applications that parse the inscription content directly. Both identifiers — the envelope metaprotocol tag and the JSON protocol field — MUST be present on every ArtCube Protocol inscription.
 
-### 4.2 Inscription Hierarchy
+### 4.2 Parent/Child Inscriptions
+
+The ArtCube Protocol's authorization model is built on the Ordinals **parent/child provenance** mechanism. This section explains how it works at the Bitcoin transaction level, how the protocol uses it, and how it differs from the application-level `previous_event_pointer` linked list.
+
+#### How parent/child works
+
+Every Ordinals inscription is bound to a specific UTXO. To create a **child** inscription of a parent, the parent inscription's UTXO must be included as an input in the child's **reveal transaction**. The parent UTXO is not consumed — it is returned to the creator in the same transaction (typically to the same address). The child inscription is permanently and immutably linked to the parent by the Ordinals indexer.
+
+This relationship is:
+- **Immutable** — once confirmed, the parent/child link cannot be changed or revoked
+- **Consensus-enforced** — Bitcoin validates that the parent UTXO was spent in the reveal transaction; no external system is involved
+- **Permissioned** — only the party that controls the parent UTXO (holds the private key or satisfies the multisig threshold) can create children
+
+#### How the ArtCube Protocol uses parent/child
+
+The four-level hierarchy maps directly to Ordinals parent/child:
+
+| Inscription | Parent | Created by |
+|-------------|--------|------------|
+| Entity Root | None (top-level) | Entity creator |
+| Collection Parent | Entity Root | Entity Root UTXO holder |
+| Genesis | Collection Parent | Collection Parent UTXO holder |
+| Events | Genesis | Genesis UTXO holder |
+
+When a verifier reads an inscription, they can query the Ordinals indexer for its parent. This returns the parent inscription ID, which can be followed up the chain to reconstruct the full hierarchy. No trust in the JSON content is required for hierarchy verification — it is independently verifiable from the Bitcoin transaction graph.
+
+#### How to verify parent/child
+
+Any Ordinals indexer (e.g., `ord`, Hiro, Bestinslot) exposes the parent of an inscription. Verification is straightforward:
+
+1. Fetch the inscription metadata from the indexer
+2. Read the `parent` field — this is the parent inscription ID
+3. Fetch the parent inscription and verify its `inscription_type` matches the expected level
+4. Repeat up the chain to the Entity Root (or until no parent exists)
+
+The parent/child relationship is a fact of the Bitcoin transaction graph, not a claim in the JSON body. This is what makes the ArtCube Protocol's authorization trustless.
+
+#### Parent/child vs. `previous_event_pointer`
+
+These serve different purposes and should not be confused:
+
+| | Parent/child (Ordinals) | `previous_event_pointer` (JSON field) |
+|---|---|---|
+| **Enforced by** | Bitcoin consensus | Application-level convention |
+| **Purpose** | Authorization — proves who created the inscription | Ordering — links events into per-type chains |
+| **Scope** | Vertical (hierarchy levels) | Horizontal (within a single event type) |
+| **Trustless** | Yes — verifiable from transaction graph | Advisory — aids verification but not consensus-enforced |
+| **Example** | Genesis is a child of Collection Parent | Title Event 2 points to Title Event 1 |
+
+Parent/child answers: "Was this inscription authorized?" `previous_event_pointer` answers: "What is the order of events within this category?"
+
+### 4.3 Inscription Hierarchy
 
 #### Level 0: Entity Root (optional, strongly recommended)
 
@@ -143,7 +194,7 @@ An Entity Root inscription establishes an organization's identity on Bitcoin. It
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "inscription_type": "ENTITY_ROOT",
   "version": "1.0",
   "entity": {
@@ -179,7 +230,7 @@ An Entity Root inscription establishes an organization's identity on Bitcoin. It
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "inscription_type": "ENTITY_ROOT",
   "version": "1.0",
   "entity": {
@@ -206,7 +257,7 @@ A Collection Parent groups related artworks. It is a child of an Entity Root ins
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "inscription_type": "COLLECTION_PARENT",
   "version": "1.0",
   "collection": {
@@ -242,7 +293,7 @@ A Collection Parent groups related artworks. It is a child of an Entity Root ins
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "inscription_type": "COLLECTION_PARENT",
   "version": "1.0",
   "collection": {
@@ -273,7 +324,7 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "standard": "ObjectID + Title Anchor + IP Baseline",
   "inscription_type": "GENESIS_TITLE_ANCHOR",
   "version": "1.0",
@@ -389,7 +440,7 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "standard": "ObjectID + Title Anchor + IP Baseline",
   "inscription_type": "GENESIS_TITLE_ANCHOR",
   "version": "1.0",
@@ -525,7 +576,7 @@ Events are child inscriptions of the Genesis inscription (parent → Genesis ins
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "EVENT_TYPE_HERE",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_inscription_id>",
@@ -551,9 +602,9 @@ Each event type is specified in detail below.
 
 ---
 
-### 4.3 Event Type Specifications
+### 4.4 Event Type Specifications
 
-#### 4.3.1 Title Event
+#### 4.4.1 Title Event
 
 Records ownership state changes. See Section 4.5 for the Hybrid Title Transfer model.
 
@@ -573,7 +624,7 @@ Records ownership state changes. See Section 4.5 for the Hybrid Title Transfer m
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "TITLE_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -592,7 +643,7 @@ Records ownership state changes. See Section 4.5 for the Hybrid Title Transfer m
 }
 ```
 
-#### 4.3.2 Document Event
+#### 4.4.2 Document Event
 
 Records the existence and integrity of off-chain documents. Documents are stored on Arweave (public or encrypted) or kept entirely off-platform. Bitcoin always stores the SHA-256 hash as the integrity proof.
 
@@ -611,7 +662,7 @@ Records the existence and integrity of off-chain documents. Documents are stored
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "DOCUMENT_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -626,7 +677,7 @@ Records the existence and integrity of off-chain documents. Documents are stored
 }
 ```
 
-#### 4.3.3 Condition Event
+#### 4.4.3 Condition Event
 
 Records physical condition of artwork at a point in time.
 
@@ -643,7 +694,7 @@ Records physical condition of artwork at a point in time.
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "CONDITION_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -660,7 +711,7 @@ Records physical condition of artwork at a point in time.
 }
 ```
 
-#### 4.3.4 Custody Event
+#### 4.4.4 Custody Event
 
 Records physical location changes. **Custody does not imply title transfer.** An artwork may be loaned, exhibited, or stored with a third party without any change of ownership.
 
@@ -676,7 +727,7 @@ Records physical location changes. **Custody does not imply title transfer.** An
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "CUSTODY_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -696,7 +747,7 @@ Records physical location changes. **Custody does not imply title transfer.** An
 }
 ```
 
-#### 4.3.5 IP Event
+#### 4.4.5 IP Event
 
 Records intellectual property rights evolution. IP Events use a `sub_type` field to distinguish between six categories. **IP rights changes do not imply title transfer.** They are separate concerns recorded in separate event streams.
 
@@ -737,7 +788,7 @@ Records intellectual property rights evolution. IP Events use a `sub_type` field
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "IP_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -759,7 +810,7 @@ Records intellectual property rights evolution. IP Events use a `sub_type` field
 }
 ```
 
-#### 4.3.6 Metadata Update
+#### 4.4.6 Metadata Update
 
 Records corrections or additions to non-critical metadata. Used for updated measurements, new photographs, or other factual additions that do not affect the artwork's identity.
 
@@ -771,7 +822,7 @@ Records corrections or additions to non-critical metadata. Used for updated meas
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "METADATA_UPDATE",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -785,7 +836,7 @@ Records corrections or additions to non-critical metadata. Used for updated meas
 }
 ```
 
-#### 4.3.7 Correction Event
+#### 4.4.7 Correction Event
 
 Fixes minor errors in previous events. The original event remains on-chain (immutable). The correction references it and states the corrected values.
 
@@ -798,7 +849,7 @@ Fixes minor errors in previous events. The original event remains on-chain (immu
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "CORRECTION_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -812,7 +863,7 @@ Fixes minor errors in previous events. The original event remains on-chain (immu
 }
 ```
 
-#### 4.3.8 Supersession Event
+#### 4.4.8 Supersession Event
 
 Used when a **material identity error** requires a new Genesis inscription. The old Genesis remains on-chain (immutable) but is marked as superseded. The new Genesis becomes the canonical root.
 
@@ -826,7 +877,7 @@ Used when a **material identity error** requires a new Genesis inscription. The 
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "SUPERSESSION_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "abc123i0",
@@ -839,7 +890,7 @@ Used when a **material identity error** requires a new Genesis inscription. The 
 
 ---
 
-### 4.4 Authorization Chain
+### 4.5 Authorization Chain
 
 Authorization at every level is enforced by the Ordinals parent/child mechanism. No external authentication system is required.
 
@@ -855,7 +906,7 @@ This means:
 - Only the Genesis holder can append events to an artwork's provenance chain
 - UTXO custody is a dual concern: title control **and** record-keeping authority
 
-### 4.5 Hybrid Title Transfer Model
+### 4.6 Hybrid Title Transfer Model
 
 The ArtCube Protocol adopts a dual-condition model for canonical title recognition. A transfer is valid only when **both** conditions are satisfied:
 
@@ -877,7 +928,7 @@ If UTXO control and the latest Title Event are misaligned, the title state is **
 
 Bitcoin enforces technical control through UTXO ownership. Legal ownership remains governed by applicable law and contractual agreement. The protocol records declared states — it does not independently establish or transfer legal rights.
 
-### 4.6 Intellectual Property Framework
+### 4.7 Intellectual Property Framework
 
 The Genesis inscription includes a structured IP baseline that establishes default rights and a framework for rights evolution.
 
@@ -909,7 +960,7 @@ The Genesis inscription includes a structured IP baseline that establishes defau
 
 Expanded rights are managed through append-only IP Events (Section 4.3.5). Each IP Event creates an immutable on-chain record of the rights action.
 
-### 4.7 Document Storage Layer
+### 4.8 Document Storage Layer
 
 The ArtCube Protocol uses a three-tier storage model:
 
@@ -952,7 +1003,7 @@ Arweave is public by default. For private documents, encryption is handled clien
 
 These are recommendations. The user chooses the policy per document.
 
-### 4.8 Correction and Supersession
+### 4.9 Correction and Supersession
 
 Genesis is **never edited.** Errors are handled via two mechanisms:
 
@@ -964,7 +1015,7 @@ Genesis is **never edited.** Errors are handled via two mechanisms:
 
 The old Genesis remains on-chain. The new Genesis becomes the canonical root. Superseded provenance chains can still be audited — full history is always preserved.
 
-### 4.9 Burning Semantics
+### 4.10 Burning Semantics
 
 Burning an inscription means sending it to a provably unspendable output via `OP_RETURN`. This is the only mechanism the ArtCube Protocol recognizes as a valid burn — sending to a known-unspendable address (e.g., a zero address) is not sufficient, as such addresses are technically spendable if the private key were discovered. An `OP_RETURN` output is cryptographically unspendable by Bitcoin consensus rules.
 
@@ -989,7 +1040,7 @@ VERIFY_PROVENANCE(genesis_id):
 
   1. FETCH Genesis inscription by genesis_id
      → Verify content_type = "application/json"
-     → Verify protocol = "ACP"
+     → Verify protocol = "artcube"
      → Verify inscription_type = "GENESIS_TITLE_ANCHOR"
      → Parse JSON content
 
@@ -1012,7 +1063,7 @@ VERIFY_PROVENANCE(genesis_id):
 
   4. COLLECT ALL EVENTS:
      → Find all child inscriptions of Genesis
-     → Filter to valid ArtCube Protocol events (protocol = "ACP")
+     → Filter to valid ArtCube Protocol events (protocol = "artcube")
      → Group by event_type
 
   5. RECONSTRUCT EVENT CHAINS:

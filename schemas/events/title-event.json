@@ -8,7 +8,7 @@
     "title_status", "current_legal_owner_entity", "utxo_control_entity"
   ],
   "properties": {
-    "protocol": { "const": "ACP" },
+    "protocol": { "const": "artcube" },
     "event_type": { "const": "TITLE_EVENT" },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
     "parent_genesis_inscription": { "type": "string" },

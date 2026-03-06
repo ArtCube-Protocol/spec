@@ -8,7 +8,7 @@
     "legal_title_anchor", "intellectual_property", "update_policy", "bridge_integrity"
   ],
   "properties": {
-    "protocol": { "const": "ACP" },
+    "protocol": { "const": "artcube" },
     "standard": { "const": "ObjectID + Title Anchor + IP Baseline" },
     "inscription_type": { "const": "GENESIS_TITLE_ANCHOR" },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },

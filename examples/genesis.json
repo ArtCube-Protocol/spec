@@ -1,5 +1,5 @@
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "standard": "ObjectID + Title Anchor + IP Baseline",
   "inscription_type": "GENESIS_TITLE_ANCHOR",
   "version": "1.0",

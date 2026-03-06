@@ -1,5 +1,5 @@
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "inscription_type": "ENTITY_ROOT",
   "version": "1.0",
   "entity": {

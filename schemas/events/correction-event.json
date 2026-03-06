@@ -8,7 +8,7 @@
     "corrected_event_pointer", "corrected_fields", "reason"
   ],
   "properties": {
-    "protocol": { "const": "ACP" },
+    "protocol": { "const": "artcube" },
     "event_type": { "const": "CORRECTION_EVENT" },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
     "parent_genesis_inscription": { "type": "string" },

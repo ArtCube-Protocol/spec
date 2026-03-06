@@ -1,5 +1,5 @@
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "inscription_type": "COLLECTION_PARENT",
   "version": "1.0",
   "collection": {

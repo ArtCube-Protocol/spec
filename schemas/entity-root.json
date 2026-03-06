@@ -5,7 +5,7 @@
   "required": ["protocol", "inscription_type", "version", "entity", "governance", "burn_rule"],
   "properties": {
     "protocol": {
-      "const": "ACP"
+      "const": "artcube"
     },
     "inscription_type": {
       "const": "ENTITY_ROOT"

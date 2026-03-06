@@ -5,7 +5,7 @@
   "required": ["protocol", "inscription_type", "version", "collection", "burn_rule"],
   "properties": {
     "protocol": {
-      "const": "ACP"
+      "const": "artcube"
     },
     "inscription_type": {
       "const": "COLLECTION_PARENT"

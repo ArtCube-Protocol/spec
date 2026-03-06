@@ -74,7 +74,7 @@ The Genesis holder inscribes the first Title Event confirming ownership.
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "TITLE_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
@@ -102,7 +102,7 @@ An assay certificate confirming the silver purity is uploaded to Arweave and anc
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "DOCUMENT_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
@@ -125,7 +125,7 @@ An assay certificate confirming the silver purity is uploaded to Arweave and anc
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "DOCUMENT_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
@@ -148,7 +148,7 @@ Note: `previous_event_pointer` references the assay Document Event — building 
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "CONDITION_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
@@ -167,7 +167,7 @@ Note: `previous_event_pointer` references the assay Document Event — building 
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "CUSTODY_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
@@ -194,7 +194,7 @@ High-resolution reproduction rights granted for a catalogue publication.
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "IP_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
@@ -224,7 +224,7 @@ The artwork is sold. Both the UTXO and a Title Event record the transfer.
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "TITLE_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
@@ -253,7 +253,7 @@ The new owner moves the artwork to their vault.
 
 ```json
 {
-  "protocol": "ACP",
+  "protocol": "artcube",
   "event_type": "CUSTODY_EVENT",
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_id>",
