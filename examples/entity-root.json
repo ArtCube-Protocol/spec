@@ -3,9 +3,10 @@
   "inscription_type": "ENTITY_ROOT",
   "version": "1.0",
   "entity": {
-    "name": "Trio / BitBasel",
+    "name": "ArtCube",
     "type": "ORGANIZATION",
     "jurisdiction": "Florida, USA",
+    "founding_entities": ["BitBasel", "Trio"],
     "description": "Art technology and exhibition platform specializing in Bitcoin-native provenance for physical artworks."
   },
   "governance": {
@@ -13,6 +14,5 @@
     "authorized_signers": 3,
     "required_signers": 2
   },
-  "burn_rule": "Burning this Entity Root permanently closes the entity. No new Collection Parents may be created. Existing collections and provenance chains remain valid.",
-  "created_utc": "2026-02-17T00:00:00Z"
+  "burn_rule": "Burning this Entity Root permanently closes the entity. No new Collection Parents may be created. Existing collections and provenance chains remain valid."
 }

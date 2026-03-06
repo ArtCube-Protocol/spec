@@ -16,6 +16,5 @@
       "edition_notes": "One edition each in .999 fine silver, .999 fine gold, and .999 fine platinum"
     }
   },
-  "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid.",
-  "created_utc": "2026-02-17T00:00:00Z"
+  "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid."
 }

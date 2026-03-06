@@ -2,7 +2,7 @@
   "title": "ArtCube Protocol Collection Parent",
   "description": "Level 1 inscription grouping related artworks. Child of Entity Root (parent/child).",
   "type": "object",
-  "required": ["protocol", "inscription_type", "version", "collection", "burn_rule", "created_utc"],
+  "required": ["protocol", "inscription_type", "version", "collection", "burn_rule"],
   "properties": {
     "protocol": {
       "const": "ACP"
@@ -42,8 +42,7 @@
         }
       }
     },
-    "burn_rule": { "type": "string" },
-    "created_utc": { "type": "string", "format": "date-time" }
+    "burn_rule": { "type": "string" }
   },
   "additionalProperties": false
 }

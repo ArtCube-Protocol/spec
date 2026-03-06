@@ -80,7 +80,6 @@ The Genesis holder inscribes the first Title Event confirming ownership.
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-02-17",
   "previous_event_pointer": null,
-  "created_utc": "2026-02-17T12:00:00Z",
   "title_status": "OWNED",
   "current_legal_owner_entity": {
     "name": "Silver Battle of the Centaurs, Inc.",
@@ -109,7 +108,6 @@ An assay certificate confirming the silver purity is uploaded to Arweave and anc
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-03-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-03-01T10:00:00Z",
   "document_type": "ASSAY",
   "document_hash_sha256": "a1b2c3d4...",
   "issuer": "Independent Precious Metals Lab",
@@ -133,7 +131,6 @@ An assay certificate confirming the silver purity is uploaded to Arweave and anc
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-03-15",
   "previous_event_pointer": "<assay_document_event_id>",
-  "created_utc": "2026-03-15T14:00:00Z",
   "document_type": "CONDITION_REPORT",
   "document_hash_sha256": "e5f6a7b8...",
   "issuer": "Art Conservation Services LLC",
@@ -157,7 +154,6 @@ Note: `previous_event_pointer` references the assay Document Event — building 
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-03-14",
   "previous_event_pointer": null,
-  "created_utc": "2026-03-14T16:00:00Z",
   "inspection_date": "2026-03-14",
   "inspector_entity": "Art Conservation Services LLC",
   "condition_summary": "Excellent condition. No visible damage, tarnishing, or structural compromise.",
@@ -177,7 +173,6 @@ Note: `previous_event_pointer` references the assay Document Event — building 
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-04-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-04-01T09:00:00Z",
   "custodian": {
     "name": "Miami Art Storage Inc.",
     "type": "FACILITY"
@@ -205,7 +200,6 @@ High-resolution reproduction rights granted for a catalogue publication.
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-05-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-05-01T11:00:00Z",
   "sub_type": "RIGHTS_GRANT",
   "parties": {
     "grantor": { "name": "Silver Battle of the Centaurs, Inc." },
@@ -236,7 +230,6 @@ The artwork is sold. Both the UTXO and a Title Event record the transfer.
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-06-15",
   "previous_event_pointer": "<title_event_1_id>",
-  "created_utc": "2026-06-15T10:00:00Z",
   "title_status": "TRANSFERRED",
   "current_legal_owner_entity": {
     "name": "Collector Holdings LLC",
@@ -266,7 +259,6 @@ The new owner moves the artwork to their vault.
   "parent_genesis_inscription": "<genesis_id>",
   "effective_date": "2026-06-20",
   "previous_event_pointer": "<custody_event_1_id>",
-  "created_utc": "2026-06-20T15:00:00Z",
   "custodian": {
     "name": "Collector Holdings LLC",
     "type": "OWNER"

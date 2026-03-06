@@ -2,7 +2,7 @@
   "title": "ArtCube Protocol Entity Root",
   "description": "Level 0 inscription establishing an organization's identity on Bitcoin.",
   "type": "object",
-  "required": ["protocol", "inscription_type", "version", "entity", "governance", "burn_rule", "created_utc"],
+  "required": ["protocol", "inscription_type", "version", "entity", "governance", "burn_rule"],
   "properties": {
     "protocol": {
       "const": "ACP"
@@ -26,6 +26,11 @@
         "jurisdiction": { "type": "string" },
         "description": { "type": "string" },
         "website": { "type": "string", "format": "uri" },
+        "founding_entities": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Organizations or individuals that created this entity"
+        },
         "contact": { "type": "string" }
       }
     },
@@ -41,8 +46,7 @@
         "required_signers": { "type": "integer", "minimum": 1 }
       }
     },
-    "burn_rule": { "type": "string" },
-    "created_utc": { "type": "string", "format": "date-time" }
+    "burn_rule": { "type": "string" }
   },
   "additionalProperties": false
 }

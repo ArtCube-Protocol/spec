@@ -4,7 +4,7 @@
   "type": "object",
   "required": [
     "protocol", "event_type", "version", "parent_genesis_inscription",
-    "effective_date", "previous_event_pointer", "created_utc",
+    "effective_date", "previous_event_pointer",
     "custodian", "location"
   ],
   "properties": {
@@ -14,7 +14,6 @@
     "parent_genesis_inscription": { "type": "string" },
     "effective_date": { "type": "string", "format": "date" },
     "previous_event_pointer": { "type": ["string", "null"] },
-    "created_utc": { "type": "string", "format": "date-time" },
     "custodian": {
       "type": "object",
       "required": ["name"],

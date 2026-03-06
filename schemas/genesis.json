@@ -14,11 +14,10 @@
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
     "record": {
       "type": "object",
-      "required": ["asset_id", "object_id_record_date", "created_utc", "language"],
+      "required": ["asset_id", "object_id_record_date", "language"],
       "properties": {
         "asset_id": { "type": "string" },
         "object_id_record_date": { "type": "string", "format": "date" },
-        "created_utc": { "type": "string", "format": "date-time" },
         "language": { "type": "string" },
         "spv_reference_id": { "type": "string" }
       }

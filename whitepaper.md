@@ -120,6 +120,8 @@ The metaprotocol tag `"artcube"` is included in the inscription envelope. All Ar
 
 An Entity Root inscription establishes an organization's identity on Bitcoin. It is a top-level inscription with no parent.
 
+**Governance** declares how the Entity Root UTXO is held. This matters because whoever controls the Entity Root UTXO has exclusive write access to create new Collection Parents under that entity (via Ordinals parent/child). The `governance` field is a transparency declaration — it tells verifiers the custody model (single-key or multisig) and, for multisig wallets, the signer threshold (e.g., 2-of-3). The protocol does not enforce the custody model itself — Bitcoin consensus and the wallet enforce it. The governance field makes the security posture publicly auditable so that collectors, institutions, and verifiers can assess the trust level of the entity.
+
 **Schema:**
 
 ```json
@@ -130,6 +132,7 @@ An Entity Root inscription establishes an organization's identity on Bitcoin. It
   "entity": {
     "name": "string (required)",
     "type": "ORGANIZATION | INDIVIDUAL | ESTATE | TRUST | SPV | DAO",
+    "founding_entities": "string[] (optional — organizations or individuals that created this entity)",
     "jurisdiction": "string (required)",
     "description": "string (optional)",
     "website": "string (optional)",
@@ -140,8 +143,7 @@ An Entity Root inscription establishes an organization's identity on Bitcoin. It
     "authorized_signers": "number (optional)",
     "required_signers": "number (optional)"
   },
-  "burn_rule": "Burning this Entity Root permanently closes the entity. No new Collection Parents may be created. Existing collections and provenance chains remain valid.",
-  "created_utc": "ISO 8601 timestamp"
+  "burn_rule": "Burning this Entity Root permanently closes the entity. No new Collection Parents may be created. Existing collections and provenance chains remain valid."
 }
 ```
 
@@ -156,7 +158,7 @@ An Entity Root inscription establishes an organization's identity on Bitcoin. It
 | `SPV` | Special purpose vehicle — a legal entity created for a specific asset or transaction (e.g., holding title to a single high-value artwork) |
 | `DAO` | Decentralized autonomous organization |
 
-**Example — Trio/BitBasel:**
+**Example — ArtCube:**
 
 ```json
 {
@@ -164,18 +166,18 @@ An Entity Root inscription establishes an organization's identity on Bitcoin. It
   "inscription_type": "ENTITY_ROOT",
   "version": "1.0",
   "entity": {
-    "name": "Trio / BitBasel",
+    "name": "ArtCube",
     "type": "ORGANIZATION",
+    "founding_entities": ["BitBasel", "Trio"],
     "jurisdiction": "Florida, USA",
-    "description": "Art technology and exhibition platform"
+    "description": "Art technology and exhibition platform specializing in Bitcoin-native provenance for physical artworks."
   },
   "governance": {
     "utxo_custody": "MULTISIG",
     "authorized_signers": 3,
     "required_signers": 2
   },
-  "burn_rule": "Burning this Entity Root permanently closes the entity. No new Collection Parents may be created. Existing collections and provenance chains remain valid.",
-  "created_utc": "2026-02-17T00:00:00Z"
+  "burn_rule": "Burning this Entity Root permanently closes the entity. No new Collection Parents may be created. Existing collections and provenance chains remain valid."
 }
 ```
 
@@ -204,8 +206,7 @@ A Collection Parent groups related artworks. It is a child of an Entity Root ins
       "edition_notes": "string (optional)"
     }
   },
-  "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid.",
-  "created_utc": "ISO 8601 timestamp"
+  "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid."
 }
 ```
 
@@ -241,8 +242,7 @@ A Collection Parent groups related artworks. It is a child of an Entity Root ins
       "edition_notes": "One edition each in .999 fine silver, .999 fine gold, and .999 fine platinum"
     }
   },
-  "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid.",
-  "created_utc": "2026-02-17T00:00:00Z"
+  "burn_rule": "Burning this Collection Parent permanently closes the collection. No new Genesis inscriptions may be created under it. Existing provenance chains remain valid."
 }
 ```
 
@@ -264,7 +264,6 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
   "record": {
     "asset_id": "string (required)",
     "object_id_record_date": "YYYY-MM-DD (required)",
-    "created_utc": "ISO 8601 timestamp (required)",
     "language": "language code (required)",
     "spv_reference_id": "string (optional)"
   },
@@ -381,7 +380,6 @@ Genesis is **never modified** after inscription. All subsequent changes are reco
     "asset_id": "TIC-SBC-SLV-2022-001",
     "spv_reference_id": "SBCI-ART-0001",
     "object_id_record_date": "2026-02-17",
-    "created_utc": "2026-02-17T00:00:00Z",
     "language": "en-US"
   },
   "object_id_core": {
@@ -515,8 +513,7 @@ Events are child inscriptions of the Genesis inscription (parent → Genesis ins
   "version": "1.0",
   "parent_genesis_inscription": "<genesis_inscription_id>",
   "effective_date": "YYYY-MM-DD",
-  "previous_event_pointer": "<inscription_id or null>",
-  "created_utc": "ISO 8601 timestamp"
+  "previous_event_pointer": "<inscription_id or null>"
 }
 ```
 
@@ -565,7 +562,6 @@ Records ownership state changes. See Section 4.5 for the Hybrid Title Transfer m
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-03-15",
   "previous_event_pointer": null,
-  "created_utc": "2026-03-15T10:00:00Z",
   "title_status": "TRANSFERRED",
   "current_legal_owner_entity": {
     "name": "New Owner LLC",
@@ -604,7 +600,6 @@ Records the existence and integrity of off-chain documents. Documents are stored
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-04-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-04-01T14:00:00Z",
   "document_type": "CONDITION_REPORT",
   "document_hash_sha256": "a1b2c3d4e5f6...",
   "issuer": "Art Conservation Services LLC",
@@ -637,7 +632,6 @@ Records physical condition of artwork at a point in time.
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-05-10",
   "previous_event_pointer": null,
-  "created_utc": "2026-05-10T09:00:00Z",
   "inspection_date": "2026-05-10",
   "inspector_entity": "Fine Art Conservation Group",
   "condition_summary": "Excellent condition. No visible damage, tarnishing, or structural compromise. Surface patina consistent with age.",
@@ -671,7 +665,6 @@ Records physical location changes. **Custody does not imply title transfer.** An
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-06-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-06-01T12:00:00Z",
   "custodian": {
     "name": "Miami Art Storage Inc.",
     "type": "FACILITY"
@@ -733,7 +726,6 @@ Records intellectual property rights evolution. IP Events use a `sub_type` field
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-07-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-07-01T10:00:00Z",
   "sub_type": "RIGHTS_GRANT",
   "parties": {
     "grantor": { "name": "Silver Battle of the Centaurs, Inc." },
@@ -768,7 +760,6 @@ Records corrections or additions to non-critical metadata. Used for updated meas
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-08-15",
   "previous_event_pointer": null,
-  "created_utc": "2026-08-15T16:00:00Z",
   "updated_fields": {
     "measurements.weight.troy_ounces": 2335,
     "measurements.weight.kilograms": 72.63
@@ -796,7 +787,6 @@ Fixes minor errors in previous events. The original event remains on-chain (immu
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-09-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-09-01T11:00:00Z",
   "corrected_event_pointer": "def456i0",
   "corrected_fields": {
     "inspector_entity": "Fine Art Conservation Group LLC"
@@ -825,7 +815,6 @@ Used when a **material identity error** requires a new Genesis inscription. The 
   "parent_genesis_inscription": "abc123i0",
   "effective_date": "2026-10-01",
   "previous_event_pointer": null,
-  "created_utc": "2026-10-01T08:00:00Z",
   "new_genesis_inscription": "ghi789i0",
   "reason": "Original Genesis contained material attribution error. New Genesis created with corrected maker information."
 }
@@ -1157,9 +1146,10 @@ The first implementation is ArtCube, built by Trio and BitBasel.
 The following illustrates a complete ArtCube Protocol hierarchy for the Battle of the Centaurs silver edition:
 
 ```
-Entity Root: Trio / BitBasel
+Entity Root: ArtCube
   inscription_type: ENTITY_ROOT
   entity.type: ORGANIZATION
+  entity.founding_entities: [BitBasel, Trio]
   entity.jurisdiction: Florida, USA
   │
   └─ Collection Parent: Battle of the Centaurs — Precious Metal Editions
