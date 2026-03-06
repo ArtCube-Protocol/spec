@@ -181,16 +181,16 @@ OP_ENDIF
 
 #### 4.1.3 Properties (Tag 17)
 
-Every ArtCube Protocol inscription SHOULD include **properties** (envelope tag `17`) containing CBOR-encoded structured attributes. Properties follow the Ordinals specification schema using integer keys.
+Every ArtCube Protocol inscription SHOULD include **properties** (envelope tag `17`) containing a title and optional traits. Inscription services accept properties as a simple JSON object:
 
-When properties are CBOR-encoded, the **properties encoding** tag (`19`) MUST be set to `"cbor"`.
-
+```json
+{
+  "title": "<human-readable name>",
+  "traits": { "<key>": "<value>", ... }
+}
 ```
-Properties = { 1: Attributes }
-Attributes = { 0: <title>, 1: <traits> }
-```
 
-**Title** (Attributes key `0`) is a human-readable name for the inscription. Every inscription MUST include a title. **Traits** (Attributes key `1`) are filterable key-value pairs. Traits are only used on **Genesis inscriptions** — the artwork level — where they enable marketplace filtering and discovery.
+The inscription service handles CBOR encoding and tag assignment internally. **Title** is a human-readable name for the inscription. Every inscription MUST include a title. **Traits** are filterable key-value pairs. Traits are only used on **Genesis inscriptions** — the artwork level — where they enable marketplace filtering and discovery.
 
 **Title conventions:**
 
@@ -218,14 +218,12 @@ Attributes = { 0: <title>, 1: <traits> }
 
 ```json
 {
-  "1": {
-    "0": "Battle of the Centaurs",
-    "1": {
-      "Artist": "Michelangelo Buonarroti",
-      "Medium": ".999 Fine Silver",
-      "Period": "c.1490–1492",
-      "Owner": "Silver Battle of the Centaurs, Inc."
-    }
+  "title": "Battle of the Centaurs",
+  "traits": {
+    "Artist": "Michelangelo Buonarroti",
+    "Medium": ".999 Fine Silver",
+    "Period": "c.1490–1492",
+    "Owner": "Silver Battle of the Centaurs, Inc."
   }
 }
 ```
@@ -234,9 +232,7 @@ Attributes = { 0: <title>, 1: <traits> }
 
 ```json
 {
-  "1": {
-    "0": "Title Event — OWNED"
-  }
+  "title": "Title Event — OWNED"
 }
 ```
 

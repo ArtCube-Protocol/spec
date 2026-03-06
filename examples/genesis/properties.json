@@ -1,11 +1,9 @@
 {
-  "1": {
-    "0": "Battle of the Centaurs",
-    "1": {
-      "Artist": "Michelangelo Buonarroti",
-      "Medium": ".999 Fine Silver",
-      "Period": "c.1490–1492",
-      "Owner": "Silver Battle of the Centaurs, Inc."
-    }
+  "title": "Battle of the Centaurs",
+  "traits": {
+    "Artist": "Michelangelo Buonarroti",
+    "Medium": ".999 Fine Silver",
+    "Period": "c.1490–1492",
+    "Owner": "Silver Battle of the Centaurs, Inc."
   }
 }
