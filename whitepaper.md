@@ -2,7 +2,7 @@
 
 **A Standardized Digital Provenance & Ownership Framework for Art**
 
-Scott Spiegel, Antonio Vasaiely (BitBasel), Brian Laughlan (Trio)
+Scott Spiegel (BitBasel) & Brian Laughlan (Trio)
 
 Version 1.0 — Working Draft | February 2026
 
